@@ -3,68 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Floorplan Viewer</title>
+    <title>PDF Viewer</title>
     <style>
-        body {
+        * {
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: #1a1a1a;
             font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
+            height: 100vh;
+            overflow: hidden;
         }
-        .header {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .viewer-container {
-            background: white;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        iframe {
-            width: 100%;
-            height: 80vh;
+        
+        embed {
+            width: 100vw;
+            height: 100vh;
             border: none;
-            border-radius: 4px;
         }
-        .download-link {
-            display: inline-block;
-            background: #007bff;
+        
+        .no-pdf {
             color: white;
-            padding: 10px 20px;
-            text-decoration: none;
-            border-radius: 4px;
-            margin-top: 15px;
-        }
-        .download-link:hover {
-            background: #0056b3;
+            text-align: center;
+            padding-top: 50vh;
+            transform: translateY(-50%);
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>Project Floorplan</h1>
-        <p>Professional floorplan viewer</p>
-    </div>
-    
-    <div class="viewer-container">
-        <iframe id="floorplanViewer" src=""></iframe>
-        <a id="downloadLink" href="#" target="_blank" class="download-link">Download Original</a>
+    <div id="content">
+        <!-- PDF will load here -->
     </div>
 
     <script>
-        // Get URL parameter
         const urlParams = new URLSearchParams(window.location.search);
-        const floorplanUrl = urlParams.get('url');
+        const pdfUrl = urlParams.get('url');
         
-        if (floorplanUrl) {
-            document.getElementById('floorplanViewer').src = floorplanUrl;
-            document.getElementById('downloadLink').href = floorplanUrl;
+        if (pdfUrl) {
+            document.getElementById('content').innerHTML = `<embed src="${pdfUrl}" type="application/pdf">`;
         } else {
-            document.querySelector('.viewer-container').innerHTML = '<p>No floorplan URL provided.</p>';
+            document.getElementById('content').innerHTML = '<div class="no-pdf">No PDF URL provided</div>';
         }
     </script>
 </body>
